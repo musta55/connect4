@@ -1,1 +1,1 @@
-# connect4
+# connect_four_aim_bot
