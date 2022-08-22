@@ -1,0 +1,43 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito+Sans:wght@400;600;700;800;900&family=Poppins:wght@400;600;700&family=Ubuntu:wght@700&display=swap');
+
+h1{
+    font-family: 'Poppins';
+    text-align: center;
+}
+
+.boardBG{
+    height: 612px;
+    width: 690px;
+    margin: 0px auto;
+    margin-top: 70px;
+    background-image: url('../../assets/images/connect4.png');
+    background-repeat: none;
+    background-size: contain;
+}
+
+
+.board{
+    height: 480px;
+    width: 560px;
+    margin: 0px auto;
+    padding-top: 30px;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.inner-circle{
+    height: 58px;
+    width: 58px;
+    margin: 6px;
+    background-color: white;
+    border-radius: 50%;
+}
+
+.tile{
+    height: 70px;
+    width: 70px;
+    margin: 5px;
+    background-image: url('../../assets/images/ring.png');
+    background-repeat: none;
+    background-size: cover;
+}
