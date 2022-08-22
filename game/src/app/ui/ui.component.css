@@ -5,11 +5,19 @@ h1{
     text-align: center;
 }
 
+.gameName{
+    height: 70px;
+    width: 241px;
+    background-image: url('../../assets/images/heading.png');
+    margin-left: 42%;
+    margin-top: 10px;
+}
+
 .boardBG{
     height: 612px;
     width: 690px;
     margin: 0px auto;
-    margin-top: 70px;
+    margin-top: 30px;
     background-image: url('../../assets/images/connect4.png');
     background-repeat: none;
     background-size: contain;
@@ -25,11 +33,31 @@ h1{
     flex-wrap: wrap;
 }
 
-.inner-circle{
+#inner-circle{
     height: 58px;
     width: 58px;
     margin: 6px;
     background-color: white;
+    border-radius: 50%;
+}
+
+#inner-circle-filled-player{
+    height: 58px;
+    width: 58px;
+    margin: 6px;
+    background-image: url('../../assets/images/redCoin.png');
+    background-repeat: none;
+    background-size: contain;
+    border-radius: 50%;
+}
+
+#inner-circle-filled-bot{
+    height: 58px;
+    width: 58px;
+    margin: 6px;
+    background-image: url('../../assets/images/yellowCoin.png');
+    background-repeat: none;
+    background-size: contain;
     border-radius: 50%;
 }
 
