@@ -1,1 +1,2 @@
-# connect_four_aim_bot
+# Connect Four with AI game
+## Team AIM_BOT
