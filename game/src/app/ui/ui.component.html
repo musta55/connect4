@@ -1,5 +1,16 @@
 <div class="body">
     <img class="gameName" src="../../assets/images/heading.png">
+
+    <div *ngIf="visible">
+        <h1 align="center">Who Starts?</h1>
+
+    <div align="center">
+        <button type="button" class="btn btn-primary" (click)="setStarter(0)" margin="30">Player</button>
+        <button type="button" class="btn btn-danger" (click)="setStarter(1)">AI</button>
+    </div>
+    </div>
+
+
 <div class="boardBG">
     <div class="board">
     <div class="tile" *ngFor='let in of counter(42) ;let i = index'> 
