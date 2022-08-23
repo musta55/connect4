@@ -8,7 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class UIComponent implements OnInit {
 
   constructor() { }
-
+  visible = true;
   i: number=0;
   isFilled:boolean[] = new Array(42);
   currentTurnNumber: number = 0;
@@ -40,33 +40,37 @@ export class UIComponent implements OnInit {
 
   
 
-counter(i: number) {
-  return new Array(i);
-}
-
-changeColour(i: number){
-  console.log("The position is "+ i);
-
-  var row = Math.floor(i/7);
-  var col = i%7;
-  console.log("Row and Column " + row + " " +  col + " " + this.rowIndextoSit[col]);
-
-  if(this.currentTurnPlayer){
-    this.currentTurnPlayer = false;
-    this.whoseTurn[this.rowIndextoSit[col]] = 'player';
-    console.log("Next turn is bot");
-  }
-  else{
-    this.currentTurnPlayer = true;
-    this.whoseTurn[this.rowIndextoSit[col]] = 'bot';
-    console.log("Next turn is human");
+  counter(i: number) {
+    return new Array(i);
   }
 
-  this.isFilled[this.rowIndextoSit[col]] = true;
-  this.rowIndextoSit[col] -= 7;
+  changeColour(i: number){
+    console.log("The position is "+ i);
 
-  this.currentTurnNumber++;
-  
-}
+    var row = Math.floor(i/7);
+    var col = i%7;
+    console.log("Row and Column " + row + " " +  col + " " + this.rowIndextoSit[col]);
+
+    if(this.currentTurnPlayer){
+      this.currentTurnPlayer = false;
+      this.whoseTurn[this.rowIndextoSit[col]] = 'player';
+      console.log("Next turn is bot");
+    }
+    else{
+      this.currentTurnPlayer = true;
+      this.whoseTurn[this.rowIndextoSit[col]] = 'bot';
+      console.log("Next turn is human");
+    }
+
+    this.isFilled[this.rowIndextoSit[col]] = true;
+    this.rowIndextoSit[col] -= 7;
+
+    this.currentTurnNumber++;
+    
+  }
+
+  setStarter(input: number){
+    this.visible = false;
+  }
 
 }
