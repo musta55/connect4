@@ -49,6 +49,14 @@ h1{
     background-repeat: none;
     background-size: contain;
     border-radius: 50%;
+    transition: opacity 2s;
+    transition-duration: 3s;
+    transition-timing-function: ease-in;
+}
+
+.inner-circle-filled-player:active{
+    opacity: 100;
+    transition-duration: 3s;
 }
 
 .inner-circle-filled-bot{
@@ -59,6 +67,9 @@ h1{
     background-repeat: none;
     background-size: contain;
     border-radius: 50%;
+    transition: opacity 2s;
+    transition-duration: 1s;
+    transition-timing-function: ease-in;
 }
 
 .tile{

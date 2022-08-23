@@ -10,6 +10,9 @@ export class UIComponent implements OnInit {
   constructor() { }
 
   i: number=0;
+  row: number = 0;
+  col: number = 0;
+  
   isFilled:boolean[] = new Array(42);
   currentTurnNumber: number = 0;
 
@@ -19,12 +22,16 @@ export class UIComponent implements OnInit {
 
   whoseTurn: string[] = new Array(42);
 
-  tiles = document.getElementsByClassName('inner-circle');
+  makeRed:boolean[] = new Array(42);
+  makeYellow:boolean[] = new Array(42);
+
 
   ngOnInit(): void {
     for(this.i=0;this.i<42;this.i++){
       this.isFilled[this.i] = false;
       this.whoseTurn[this.i] = 'player';
+      this.makeRed[this.i] = false;
+      this.makeYellow[this.i] = false;
     }
 
     this.rowIndextoSit[0] = 35;
@@ -47,26 +54,36 @@ counter(i: number) {
 changeColour(i: number){
   console.log("The position is "+ i);
 
-  var row = Math.floor(i/7);
-  var col = i%7;
-  console.log("Row and Column " + row + " " +  col + " " + this.rowIndextoSit[col]);
+  this.row = Math.floor(i/7);
+  this.col = i%7;
+  console.log("Row and Column " + this.row + " " +  this.col + " " + this.rowIndextoSit[this.col]);
 
   if(this.currentTurnPlayer){
     this.currentTurnPlayer = false;
-    this.whoseTurn[this.rowIndextoSit[col]] = 'player';
+    this.whoseTurn[this.rowIndextoSit[this.col]] = 'player';
+
+    for(var tiles = 0; tiles<42 ; tiles++){
+      if(tiles%7==this.col){
+        this.makeRed[tiles] = true;
+        console.log("Should be red " + tiles);
+        // if(tiles-7>=0){
+        //   this.makeRed[tiles-7] = false;
+        // }
+      }
+    }
+
     console.log("Next turn is bot");
   }
   else{
     this.currentTurnPlayer = true;
-    this.whoseTurn[this.rowIndextoSit[col]] = 'bot';
+    this.whoseTurn[this.rowIndextoSit[this.col]] = 'bot';
     console.log("Next turn is human");
   }
 
-  this.isFilled[this.rowIndextoSit[col]] = true;
-  this.rowIndextoSit[col] -= 7;
+  this.isFilled[this.rowIndextoSit[this.col]] = true;
+  this.rowIndextoSit[this.col] -= 7;
 
   this.currentTurnNumber++;
   
 }
-
 }

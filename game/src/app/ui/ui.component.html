@@ -4,7 +4,7 @@
     <div class="board">
     <div class="tile" *ngFor='let in of counter(42) ;let i = index'> 
         <div class="inner-circle" *ngIf="!isFilled[i]" (click)="changeColour(i)"></div>
-        <div class="inner-circle-filled-player" *ngIf="isFilled[i] && whoseTurn[i]==='player'" (click)="changeColour(i)"></div>
+        <div class="inner-circle-filled-player" *ngIf="isFilled[i] && whoseTurn[i]==='player' || makeRed[i]" (click)="changeColour(i)"></div>
         <div class="inner-circle-filled-bot" *ngIf="isFilled[i] && whoseTurn[i]==='bot'" (click)="changeColour(i)"></div>
     </div>
 </div>
