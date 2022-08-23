@@ -5,8 +5,8 @@
         <h1 align="center">Who Starts?</h1>
 
     <div align="center">
-        <button type="button" class="btn btn-primary" (click)="setStarter(0)" margin="30">Player</button>
-        <button type="button" class="btn btn-danger" (click)="setStarter(1)">AI</button>
+        <button class="button-57" role="button" (click)="setStarter(0)" margin="30"><span class="text">Player</span><span>Alternate text</span></button>
+        <button class="button-57 button-bot" role="button" (click)="setStarter(1)"><span class="text">AI</span><span>Alternate text</span></button>
     </div>
     </div>
 
@@ -15,7 +15,7 @@
     <div class="board">
     <div class="tile" *ngFor='let in of counter(42) ;let i = index'> 
         <div class="inner-circle" *ngIf="!isFilled[i]" (click)="changeColour(i)"></div>
-        <div class="inner-circle-filled-player" *ngIf="isFilled[i] && whoseTurn[i]==='player' || makeRed[i]" (click)="changeColour(i)"></div>
+        <div class="inner-circle-filled-player" *ngIf="isFilled[i] && whoseTurn[i]==='player'" (click)="changeColour(i)"></div>
         <div class="inner-circle-filled-bot" *ngIf="isFilled[i] && whoseTurn[i]==='bot'" (click)="changeColour(i)"></div>
     </div>
 </div>

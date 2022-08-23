@@ -5,13 +5,13 @@ import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UIComponent } from './ui/ui.component';
-import { WhoStartsComponent } from './who-starts/who-starts.component';
+import { StartComponent } from './start/start.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UIComponent,
-    WhoStartsComponent
+    StartComponent
   ],
   imports: [
     BrowserModule,

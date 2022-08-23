@@ -11,14 +11,13 @@ import { Component, OnInit } from '@angular/core';
 export class UIComponent implements OnInit {
 
   constructor() { }
-<<<<<<< HEAD
 
-  i: number=0;
+  i: number = 0;
   row: number = 0;
   col: number = 0;
-  
-  isFilled:boolean[] = new Array(42);
-=======
+
+  isFilled: boolean[] = new Array(42);
+
   visible = true;
   HUMAN = 1;
   AI = 2;
@@ -26,9 +25,7 @@ export class UIComponent implements OnInit {
   windowLength = 4;
   COL_COUNT = 7;
   ROW_COUNT = 6;
-  i: number = 0;
-  isFilled: boolean[] = new Array(42);
->>>>>>> c5a2fc39fede5c0319fc99391e91f7d64eaff390
+
   currentTurnNumber: number = 0;
 
   rowIndextoSit: number[] = new Array(7);
@@ -37,32 +34,32 @@ export class UIComponent implements OnInit {
 
   whoseTurn: string[] = new Array(42);
 
-  makeRed:boolean[] = new Array(42);
-  makeYellow:boolean[] = new Array(42);
+  makeRed: boolean[] = new Array(42);
+  makeYellow: boolean[] = new Array(42);
 
 
-   board = [
-    [0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0],
-    [0,0,0,0,0,0,0]
+  board = [
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0]
   ]
 
   testBoard = [
-    [0,0,0,0,0,0,0],
-    [0,0,1,1,1,0,0],
-    [0,2,2,0,1,1,0],
-    [0,0,0,0,0,0,0],
-    [0,0,0,1,0,0,0],
-    [0,0,1,0,0,0,0]
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 1, 1, 1, 0, 0],
+    [0, 2, 2, 0, 1, 1, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0],
+    [0, 0, 1, 0, 0, 0, 0]
   ]
 
   ngOnInit(): void {
-    
-    var counter= this.countPiece(this.testBoard[1],1);
-    console.log("Counter holo " +counter)
+
+    var counter = this.countPiece(this.testBoard[1], 1);
+    console.log("Counter holo " + counter)
     for (this.i = 0; this.i < 42; this.i++) {
       this.isFilled[this.i] = false;
       this.whoseTurn[this.i] = 'player';
@@ -70,11 +67,11 @@ export class UIComponent implements OnInit {
       this.makeYellow[this.i] = false;
     }
 
-    console.log("Winning ",this.winningMove(this.testBoard,1))
+    console.log("Winning ", this.winningMove(this.testBoard, 1))
 
     console.log("Terminal check", this.isTerminal(this.testBoard))
 
-    console.log("Score Check ", this.scoreForCurrentPosition(this.testBoard,this.HUMAN))
+    console.log("Score Check ", this.scoreForCurrentPosition(this.testBoard, this.HUMAN))
 
 
 
@@ -100,19 +97,19 @@ export class UIComponent implements OnInit {
 
     var row = Math.floor(i / 7);
     var col = i % 7;
-    
+
     console.log("Row and Column " + row + " " + col + " " + this.rowIndextoSit[col]);
 
     if (this.currentTurnPlayer) {
       this.currentTurnPlayer = false;
       this.whoseTurn[this.rowIndextoSit[col]] = 'player';
-      this.board[row] [col] =this.HUMAN;
+      this.board[row][col] = this.HUMAN;
       console.log("Next turn is bot");
     }
     else {
       this.currentTurnPlayer = true;
       this.whoseTurn[this.rowIndextoSit[col]] = 'bot';
-      this.board[row] [col] =this.AI;
+      this.board[row][col] = this.AI;
       console.log("Next turn is human");
     }
 
@@ -207,36 +204,34 @@ export class UIComponent implements OnInit {
 
     var opponentPiece = this.HUMAN;
 
-<<<<<<< HEAD
-  this.row = Math.floor(i/7);
-  this.col = i%7;
-  console.log("Row and Column " + this.row + " " +  this.col + " " + this.rowIndextoSit[this.col]);
+    this.row = Math.floor(this.i / 7);
+    this.col = this.i % 7;
+    console.log("Row and Column " + this.row + " " + this.col + " " + this.rowIndextoSit[this.col]);
 
-  if(this.currentTurnPlayer){
-    this.currentTurnPlayer = false;
-    this.whoseTurn[this.rowIndextoSit[this.col]] = 'player';
+    if (this.currentTurnPlayer) {
+      this.currentTurnPlayer = false;
+      this.whoseTurn[this.rowIndextoSit[this.col]] = 'player';
 
-    for(var tiles = 0; tiles<42 ; tiles++){
-      if(tiles%7==this.col){
-        this.makeRed[tiles] = true;
-        console.log("Should be red " + tiles);
-        // if(tiles-7>=0){
-        //   this.makeRed[tiles-7] = false;
-        // }
+      for (var tiles = 0; tiles < 42; tiles++) {
+        if (tiles % 7 == this.col) {
+          this.makeRed[tiles] = true;
+          console.log("Should be red " + tiles);
+          // if(tiles-7>=0){
+          //   this.makeRed[tiles-7] = false;
+          // }
+        }
       }
+
+      console.log("Next turn is bot");
+    }
+    else {
+      this.currentTurnPlayer = true;
+      this.whoseTurn[this.rowIndextoSit[this.col]] = 'bot';
+      console.log("Next turn is human");
     }
 
-    console.log("Next turn is bot");
-  }
-  else{
-    this.currentTurnPlayer = true;
-    this.whoseTurn[this.rowIndextoSit[this.col]] = 'bot';
-    console.log("Next turn is human");
-  }
-
-  this.isFilled[this.rowIndextoSit[this.col]] = true;
-  this.rowIndextoSit[this.col] -= 7;
-=======
+    this.isFilled[this.rowIndextoSit[this.col]] = true;
+    this.rowIndextoSit[this.col] -= 7;
     if (curPlayer == this.HUMAN) {
       opponentPiece = this.AI;
 
@@ -345,13 +340,12 @@ export class UIComponent implements OnInit {
 
   }
 
->>>>>>> c5a2fc39fede5c0319fc99391e91f7d64eaff390
 
-  validMove(board:number[][]){
-    var validLocation=[];
+  validMove(board: number[][]) {
+    var validLocation = [];
 
-    for(var c=0;c< this.COL_COUNT; c++){
-      if(this.isValidLocation(board,c)){
+    for (var c = 0; c < this.COL_COUNT; c++) {
+      if (this.isValidLocation(board, c)) {
         validLocation.push(c);
       }
     }
@@ -360,15 +354,8 @@ export class UIComponent implements OnInit {
 
   }
 
-  
-<<<<<<< HEAD
-}
-}
-=======
   isTerminal(board: number[][]) {
-    return this.winningMove(board,this.HUMAN) || this.winningMove(board,this.AI) || this.validMove(board).length==0;
+    return this.winningMove(board, this.HUMAN) || this.winningMove(board, this.AI) || this.validMove(board).length == 0;
   }
 
-
 }
->>>>>>> c5a2fc39fede5c0319fc99391e91f7d64eaff390
