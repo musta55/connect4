@@ -5,10 +5,16 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './ui.component.html',
   styleUrls: ['./ui.component.css']
 })
+
+
+
 export class UIComponent implements OnInit {
 
   constructor() { }
   visible = true;
+  HUMAN = 0;
+  AI = 1;
+  BLANK = 2;
   i: number=0;
   isFilled:boolean[] = new Array(42);
   currentTurnNumber: number = 0;
@@ -71,6 +77,12 @@ export class UIComponent implements OnInit {
 
   setStarter(input: number){
     this.visible = false;
+    if(input==0){
+      this.currentTurnPlayer = true;
+    }
+    else{
+      this.currentTurnPlayer = false;
+    }
   }
 
 }
