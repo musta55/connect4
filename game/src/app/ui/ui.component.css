@@ -6,7 +6,7 @@ h1{
 }
 
 .gameName{
-    height: 70px;
+    height: 76px;
     width: 241px;
     background-image: url('../../assets/images/heading.png');
     margin-left: 42%;
@@ -33,7 +33,7 @@ h1{
     flex-wrap: wrap;
 }
 
-#inner-circle{
+.inner-circle{
     height: 58px;
     width: 58px;
     margin: 6px;
@@ -41,7 +41,7 @@ h1{
     border-radius: 50%;
 }
 
-#inner-circle-filled-player{
+.inner-circle-filled-player{
     height: 58px;
     width: 58px;
     margin: 6px;
@@ -51,7 +51,7 @@ h1{
     border-radius: 50%;
 }
 
-#inner-circle-filled-bot{
+.inner-circle-filled-bot{
     height: 58px;
     width: 58px;
     margin: 6px;

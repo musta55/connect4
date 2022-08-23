@@ -11,17 +11,20 @@ export class UIComponent implements OnInit {
 
   i: number=0;
   isFilled:boolean[] = new Array(42);
+  currentTurnNumber: number = 0;
 
   rowIndextoSit: number[] = new Array(7);
 
-  nextTurnPlayer: boolean = true;
+  currentTurnPlayer: boolean = true;
 
-  playerTurn: boolean[] = new Array(42);
+  whoseTurn: string[] = new Array(42);
+
+  tiles = document.getElementsByClassName('inner-circle');
 
   ngOnInit(): void {
     for(this.i=0;this.i<42;this.i++){
       this.isFilled[this.i] = false;
-      this.playerTurn[this.i] = false;
+      this.whoseTurn[this.i] = 'player';
     }
 
     this.rowIndextoSit[0] = 35;
@@ -48,19 +51,21 @@ changeColour(i: number){
   var col = i%7;
   console.log("Row and Column " + row + " " +  col + " " + this.rowIndextoSit[col]);
 
-  this.isFilled[this.rowIndextoSit[col]] = true;
-  this.rowIndextoSit[col] -= 7;
-
-  if(this.nextTurnPlayer){
-    this.nextTurnPlayer = false;
-    this.playerTurn[this.rowIndextoSit[col]] = true;
+  if(this.currentTurnPlayer){
+    this.currentTurnPlayer = false;
+    this.whoseTurn[this.rowIndextoSit[col]] = 'player';
     console.log("Next turn is bot");
   }
   else{
-    this.nextTurnPlayer = true;
+    this.currentTurnPlayer = true;
+    this.whoseTurn[this.rowIndextoSit[col]] = 'bot';
     console.log("Next turn is human");
   }
 
+  this.isFilled[this.rowIndextoSit[col]] = true;
+  this.rowIndextoSit[col] -= 7;
+
+  this.currentTurnNumber++;
   
 }
 
