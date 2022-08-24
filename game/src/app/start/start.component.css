@@ -1,0 +1,13 @@
+.name{
+    display: flex;
+    height: 304px;
+    width: 964px;
+    margin: 6% auto 0;
+}
+
+.play{
+    display: flex;
+    height: 200px;
+    width: 200px;
+    margin: 10px auto;
+}
