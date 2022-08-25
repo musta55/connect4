@@ -37,6 +37,11 @@ export class UIComponent implements OnInit {
   makeRed: boolean[] = new Array(42);
   makeYellow: boolean[] = new Array(42);
 
+  getTiles = document.getElementsByClassName("coin");
+
+  getCurrentTileX = 0;
+  arrowVisible = false;
+
 
   board = [
     [0, 0, 0, 0, 0, 0, 0],
@@ -87,9 +92,23 @@ export class UIComponent implements OnInit {
   tilesNumber: number = 42;
 
 
-
   counter(i: number) {
     return new Array(i);
+  }
+
+  changeArrow(index: number){
+    this.arrowVisible = true;
+    console.log("Hovering on tile no " + index);
+    this.getCurrentTileX = this.getTiles[index].getBoundingClientRect().left;   // Get tile left position
+  }
+
+  positionLeft(): Object{
+      if (this.arrowVisible){
+          return {'left.px': this.getCurrentTileX, visibility: 'visible'}
+      }
+      else{
+        return { visibility: 'hidden'}
+      }
   }
 
   changeColour(i: number) {

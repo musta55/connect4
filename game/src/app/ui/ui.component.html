@@ -97,21 +97,25 @@
     </div>
   </div>
 
+  <div class="arrow" [ngStyle]="positionLeft()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-caret-down-fill" viewBox="0 0 16 16">
+      <path d="M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z"/>
+    </svg>
+  </div>
   <div class="boardBG">
     <div class="board">
       <div class="tile" *ngFor="let in of counter(42); let i = index">
         <div
-          class="inner-circle"
+          class="inner-circle coin"
           *ngIf="!isFilled[i]"
-          (click)="changeColour(i)"
-        ></div>
+          (click)="changeColour(i)" (mouseover)="changeArrow(i)"></div>
         <div
-          class="inner-circle-filled-player"
+          class="inner-circle-filled-player coin"
           *ngIf="isFilled[i] && whoseTurn[i] === 'player'"
           (click)="changeColour(i)"
         ></div>
         <div
-          class="inner-circle-filled-bot"
+          class="inner-circle-filled-bot coin"
           *ngIf="isFilled[i] && whoseTurn[i] === 'bot'"
           (click)="changeColour(i)"
         ></div>

@@ -40,22 +40,21 @@ h1 {
   flex-wrap: wrap;
 }
 
-.inner-circle {
+.coin{
   height: 58px;
   width: 58px;
   margin: 6px;
-  background-color: white;
   border-radius: 50%;
 }
 
+.inner-circle {
+  background-color: white;
+}
+
 .inner-circle-filled-player {
-  height: 58px;
-  width: 58px;
-  margin: 6px;
   background-image: url('../../assets/images/redCoin.png');
   background-repeat: none;
   background-size: contain;
-  border-radius: 50%;
   transition: opacity 2s;
   transition-duration: 3s;
   transition-timing-function: ease-in;
@@ -67,13 +66,9 @@ h1 {
 }
 
 .inner-circle-filled-bot {
-  height: 58px;
-  width: 58px;
-  margin: 6px;
   background-image: url('../../assets/images/yellowCoin.png');
   background-repeat: none;
   background-size: contain;
-  border-radius: 50%;
   transition: opacity 2s;
   transition-duration: 1s;
   transition-timing-function: ease-in;
@@ -167,4 +162,17 @@ h1 {
 
 svg{
   padding-top: 6px;
+}
+
+.arrow{
+  margin-top: 20px;
+  height: 20px;
+  width: 30px;
+  /* margin: 20px auto 0px; */
+  position: relative;
+  transition: left 0.5s;
+}
+
+.arrow:before{
+  margin-left: 50%;
 }
