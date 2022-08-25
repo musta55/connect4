@@ -26,6 +26,10 @@ h1 {
   background-size: contain;
 }
 
+.whoStarts-invisible{
+  visibility: hidden;
+}
+
 
 .board {
   height: 480px;
