@@ -28,6 +28,11 @@ export class UIComponent implements OnInit {
   windowLength = 4;
   COL_COUNT = 7;
   ROW_COUNT = 6;
+  showDifficulty = true;
+
+  turn = "Player";
+  turnCoin_url = "../../assets/images/";
+  turnCoin = "";
 
   currentTurnNumber: number = 0;
 
@@ -71,7 +76,15 @@ export class UIComponent implements OnInit {
   tempBoard: number[][] = [[]];
   invisible: boolean = true;
   whoWon: string = '';
+
   ngOnInit(): void {
+
+    for (this.i = 0; this.i < 42; this.i++) {
+      this.isFilled[this.i] = false;
+      this.whoseTurn[this.i] = 'player';
+      this.makeRed[this.i] = false;
+      this.makeYellow[this.i] = false;
+    }
 
     this.rowIndextoSit[0] = 35;
     this.rowIndextoSit[1] = 36;
@@ -107,9 +120,7 @@ export class UIComponent implements OnInit {
   }
 
   changeColour(i: number) {
-    console.log("The position is " + i);
-
-    
+    if(!this.whoseTurn_visible){
     var col = i % 7;
     //var row = Math.floor(i / 7);
     var row = this.getNextOpenRow(this.board,col);
@@ -117,26 +128,78 @@ export class UIComponent implements OnInit {
 
     if (this.currentTurnPlayer) {
       this.currentTurnPlayer = false;
-      this.whoseTurn[this.rowIndextoSit[col]] = 'player';
-      this.board[row][col] = this.HUMAN;
+      this.turn = "Bot";
+      this.turnCoin = this.turnCoin_url + "yellowCoin.png";
       console.log("Next turn is bot");
+      this.whoseTurn[this.rowIndextoSit[col]] = 'player';
+      console.log('calc tasmia: ', row);
+      this.board[row][col] = this.HUMAN;
+
+      if(this.winningMove(this.board, this.HUMAN)){
+        console.log("Player won");
+        this.whoWon = 'player'
+      }
+      
+        this.isFilled[this.rowIndextoSit[col]] = true;
+        this.rowIndextoSit[col] -= 7;
+
+        this.currentTurnNumber++;
+        this.currentTurnPlayer = false;
+        var that = this;
+        setTimeout(function(){
+          that.changeColour(0);
+        }, 50);
+      
     }
     else {
       this.currentTurnPlayer = true;
-      this.whoseTurn[this.rowIndextoSit[col]] = 'bot';
-      this.board[row][col] = this.AI;
-      console.log("Next turn is human");
+      this.turn = "Player";
+      this.turnCoin = this.turnCoin_url + "redCoin.png";
+      var result = this.minimax(this.board, this.difficulty, -Infinity, Infinity, true);
+      col = result[0];
+      if( this.isValidLocation(this.board, col)){
+        var row = this.getNextOpenRow(this.board, col);
+        console.log('calc ai: ', row);
+        this.board[row][col] = this.AI;
+        this.whoseTurn[this.rowIndextoSit[col]] = 'bot';
+        this.board[row][col] = this.AI;
+        if(this.winningMove(this.board, this.AI)){
+          console.log('AI won');
+          this.whoWon = 'AI'
+        }
+        this.isFilled[this.rowIndextoSit[col]] = true;
+        this.rowIndextoSit[col] -= 7;
+        this.currentTurnNumber++;
+      }
+      
     }
-
-    this.isFilled[this.rowIndextoSit[col]] = true;
-    this.rowIndextoSit[col] -= 7;
-
-    this.currentTurnNumber++;
-
+  }
+  else{
+    this.isError = true;
+  }
   }
 
+  async drop(row:number, col:number){
+    for( var index=col; index<42 ; index+=7){
+      console.log("Droppingg... " + index);
+      this.turnCoin = this.turnCoin_url + "yellowCoin.png";
+        // this.isFilled[this.rowIndextoSit[index]] = true;
+        // this.whoseTurn[this.rowIndextoSit[index]] = 'player';
+        await this.delay(3000);
+        this.turnCoin = this.turnCoin_url + "redCoin.png";
+        // this.isFilled[this.rowIndextoSit[index]] = false;
+        console.log("Droppingg Slleepppp..."  + index);
+      }
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
   setStarter(input: number) {
-    this.visible = false;
+    this.whoseTurn_visible = false;
+    this.isError = false;
+    this.invisible = false;
     if (input == 0) {
       this.currentTurnPlayer = true;
     }

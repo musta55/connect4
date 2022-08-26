@@ -227,3 +227,9 @@ svg{
 .arrow:before{
   margin-left: 50%;
 }
+
+.finishMessage{
+  font-size: larger;
+  color: red;
+  align-self: center;
+}
