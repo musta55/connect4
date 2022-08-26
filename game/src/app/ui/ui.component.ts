@@ -18,13 +18,20 @@ export class UIComponent implements OnInit {
 
   isFilled: boolean[] = new Array(42);
 
-  visible = true;
+  error = "Please select an option from above to start the game";
+  isError = false;
+
+  whoseTurn_visible = true;
   HUMAN = 1;
   AI = 2;
   EMPTY = 0;
   windowLength = 4;
   COL_COUNT = 7;
   ROW_COUNT = 6;
+
+  turn = "Player";
+  turnCoin_url = "../../assets/images/";
+  turnCoin = "";
 
   currentTurnNumber: number = 0;
 
@@ -87,6 +94,8 @@ export class UIComponent implements OnInit {
     this.rowIndextoSit[4] = 39;
     this.rowIndextoSit[5] = 40;
     this.rowIndextoSit[6] = 41;
+
+    this.turnCoin = this.turnCoin_url + "redCoin.png";
   }
 
   tilesNumber: number = 42;
@@ -98,7 +107,7 @@ export class UIComponent implements OnInit {
 
   changeArrow(index: number){
     this.arrowVisible = true;
-    console.log("Hovering on tile no " + index);
+    console.log("Hovering on tile no " + index + " left: " + this.getTiles[index].getBoundingClientRect().left );
     this.getCurrentTileX = this.getTiles[index].getBoundingClientRect().left;   // Get tile left position
   }
 
@@ -112,6 +121,8 @@ export class UIComponent implements OnInit {
   }
 
   changeColour(i: number) {
+    if(!this.whoseTurn_visible){
+
     console.log("The position is " + i);
 
     var row = Math.floor(i / 7);
@@ -121,12 +132,17 @@ export class UIComponent implements OnInit {
 
     if (this.currentTurnPlayer) {
       this.currentTurnPlayer = false;
-      this.whoseTurn[this.rowIndextoSit[col]] = 'player';
-      this.board[row][col] = this.HUMAN;
+      this.turn = "Bot";
+      this.turnCoin = this.turnCoin_url + "yellowCoin.png";
+      this.drop(row,col);
+      // this.whoseTurn[this.rowIndextoSit[col]] = 'player';
+      // this.board[row][col] = this.HUMAN;
       console.log("Next turn is bot");
     }
     else {
       this.currentTurnPlayer = true;
+      this.turn = "Player";
+      this.turnCoin = this.turnCoin_url + "redCoin.png";
       this.whoseTurn[this.rowIndextoSit[col]] = 'bot';
       this.board[row][col] = this.AI;
       console.log("Next turn is human");
@@ -136,11 +152,33 @@ export class UIComponent implements OnInit {
     this.rowIndextoSit[col] -= 7;
 
     this.currentTurnNumber++;
-
+  }
+  else{
+    this.isError = true;
+  }
   }
 
+  async drop(row:number, col:number){
+    for( var index=col; index<42 ; index+=7){
+      console.log("Droppingg... " + index);
+      this.turnCoin = this.turnCoin_url + "yellowCoin.png";
+        // this.isFilled[this.rowIndextoSit[index]] = true;
+        // this.whoseTurn[this.rowIndextoSit[index]] = 'player';
+        await this.delay(3000);
+        this.turnCoin = this.turnCoin_url + "redCoin.png";
+        // this.isFilled[this.rowIndextoSit[index]] = false;
+        console.log("Droppingg Slleepppp..."  + index);
+      }
+  }
+
+  delay(ms: number) {
+    return new Promise( resolve => setTimeout(resolve, ms) );
+}
+
+
   setStarter(input: number) {
-    this.visible = false;
+    this.whoseTurn_visible = false;
+    this.isError = false;
     if (input == 0) {
       this.currentTurnPlayer = true;
     }
