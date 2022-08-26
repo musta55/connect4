@@ -63,7 +63,7 @@ export class UIComponent implements OnInit {
 
   tempBoard: number[][] = [[]];
   invisible: boolean = true;
-
+  whoWon: string = '';
   ngOnInit(): void {
 
     this.rowIndextoSit[0] = 35;
@@ -114,6 +114,7 @@ export class UIComponent implements OnInit {
       this.board[row][col] = this.HUMAN;
       if(this.winningMove(this.board, this.HUMAN)){
         console.log("Player won");
+        this.whoWon = 'player'
       }
       else{
         this.isFilled[this.rowIndextoSit[col]] = true;
@@ -135,6 +136,7 @@ export class UIComponent implements OnInit {
         this.board[row][col] = this.AI;
         if(this.winningMove(this.board, this.AI)){
           console.log('AI won');
+          this.whoWon = 'AI'
         }
         this.isFilled[this.rowIndextoSit[col]] = true;
         this.rowIndextoSit[col] -= 7;
