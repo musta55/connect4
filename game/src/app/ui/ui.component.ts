@@ -25,6 +25,7 @@ export class UIComponent implements OnInit {
   windowLength = 4;
   COL_COUNT = 7;
   ROW_COUNT = 6;
+  showDifficulty = true;
 
   currentTurnNumber: number = 0;
 
@@ -38,11 +39,15 @@ export class UIComponent implements OnInit {
   makeYellow: boolean[] = new Array(42);
 
   getTiles = document.getElementsByClassName("coin");
+  difficulty: number = 7;
 
   getCurrentTileX = 0;
   arrowVisible = false;
 
-
+  setDifficulty(level: number){
+    this.difficulty = level;
+    this.showDifficulty = false;
+  }
   board = [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -108,7 +113,7 @@ export class UIComponent implements OnInit {
 
     if (this.currentTurnPlayer) {
       
-      this.currentTurnPlayer = false;
+      
       this.whoseTurn[this.rowIndextoSit[col]] = 'player';
       console.log('calc tasmia: ', row);
       this.board[row][col] = this.HUMAN;
@@ -116,17 +121,21 @@ export class UIComponent implements OnInit {
         console.log("Player won");
         this.whoWon = 'player'
       }
-      else{
+      
         this.isFilled[this.rowIndextoSit[col]] = true;
         this.rowIndextoSit[col] -= 7;
 
         this.currentTurnNumber++;
-        this.changeColour(0);
-      }
+        this.currentTurnPlayer = false;
+        var that = this;
+        setTimeout(function(){
+          that.changeColour(0);
+        }, 50);
+      
     }
     else {
       this.currentTurnPlayer = true;
-      var result = this.minimax(this.board, 7, -Infinity, Infinity, true);
+      var result = this.minimax(this.board, this.difficulty, -Infinity, Infinity, true);
       col = result[0];
       if( this.isValidLocation(this.board, col)){
         var row = this.getNextOpenRow(this.board, col);
