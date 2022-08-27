@@ -103,7 +103,8 @@
   </div>
 
   <div class="contain">
-    <div class="turn" [ngStyle]="{'visibility': whoseTurn_visible === true? 'hidden' : 'visible'}">
+    <div class="turn">
+      <!-- [ngStyle]="{'visibility': whoseTurn_visible === true? 'hidden' : 'visible'}" -->
           <h2>{{turn}} turn</h2>
           <img class="turnButton" [src]="turnCoin">
     </div>
@@ -125,7 +126,7 @@
       </div>
     </div>
     </div>
-    <div class="others" [ngStyle]="{'visibility': whoseTurn_visible === true? 'hidden' : 'visible'}">
+    <div class="others" (click)="reset()">
     </div>
   </div>
 </div>

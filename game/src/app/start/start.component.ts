@@ -14,7 +14,7 @@ export class StartComponent implements OnInit {
   }
 
   start(){
-    this.route.navigate(['/game']);
+    this.route.navigate(['/player']);
   }
 
 }

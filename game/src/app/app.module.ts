@@ -6,19 +6,21 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { UIComponent } from './ui/ui.component';
 import { StartComponent } from './start/start.component';
+import { PlayerSettingsComponent } from './player-settings/player-settings.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UIComponent,
-    StartComponent
+    StartComponent,
+    PlayerSettingsComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule
   ],
-  providers: [],
+  providers: [UIComponent],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

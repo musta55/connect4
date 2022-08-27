@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Route, Router } from '@angular/router';
+import { GameService } from '../game.service';
 
 @Component({
   selector: 'app-ui',
@@ -10,7 +12,7 @@ import { Component, OnInit } from '@angular/core';
 
 export class UIComponent implements OnInit {
 
-  constructor() { }
+  constructor(public gameService: GameService, private route: Router) { }
 
   i: number = 0;
   row: number = 0;
@@ -51,10 +53,6 @@ export class UIComponent implements OnInit {
   getCurrentTileX = 0;
   arrowVisible = false;
 
-  setDifficulty(level: number){
-    this.difficulty = level;
-    this.showDifficulty = false;
-  }
   board = [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -77,7 +75,13 @@ export class UIComponent implements OnInit {
   invisible: boolean = true;
   whoWon: string = '';
 
+  who =0;
+
   ngOnInit(): void {
+
+    this.who = this.gameService.getWho();
+    this.difficulty = this.gameService.getLevel();
+    
 
     for (this.i = 0; this.i < 42; this.i++) {
       this.isFilled[this.i] = false;
@@ -95,38 +99,52 @@ export class UIComponent implements OnInit {
     this.rowIndextoSit[6] = 41;
 
     this.turnCoin = this.turnCoin_url + "redCoin.png";
+
+    if(this.who==1){
+      this.setStarter(this.who);
+    }
   }
 
   tilesNumber: number = 42;
 
+  reset(){
+    this.route.navigate(['/player']);
+  }
+
+  setDifficulty(level: number) {
+    this.difficulty = level;
+    this.showDifficulty = false;
+    console.log("Difficulty " + this.showDifficulty);
+  }
 
   counter(i: number) {
     return new Array(i);
   }
 
-  changeArrow(index: number){
+  changeArrow(index: number) {
     this.arrowVisible = true;
     console.log("Hovering on tile no " + index);
     this.getCurrentTileX = this.getTiles[index].getBoundingClientRect().left;   // Get tile left position
   }
 
-  positionLeft(): Object{
-      if (this.arrowVisible){
-          return {'left.px': this.getCurrentTileX, visibility: 'visible'}
-      }
-      else{
-        return { visibility: 'hidden'}
-      }
+  positionLeft(): Object {
+    if (this.arrowVisible) {
+      return { 'left.px': this.getCurrentTileX, visibility: 'visible' }
+    }
+    else {
+      return { visibility: 'hidden' }
+    }
   }
 
   changeColour(i: number) {
-    if(!this.whoseTurn_visible){
+    // if(!this.whoseTurn_visible){
     var col = i % 7;
     //var row = Math.floor(i / 7);
-    var row = this.getNextOpenRow(this.board,col);
+    var row = this.getNextOpenRow(this.board, col);
     console.log("Row and Column " + row + " " + col + " " + this.rowIndextoSit[col]);
 
     if (this.currentTurnPlayer) {
+      // this.drop(row, col);
       this.currentTurnPlayer = false;
       this.turn = "Bot";
       this.turnCoin = this.turnCoin_url + "yellowCoin.png";
@@ -135,21 +153,21 @@ export class UIComponent implements OnInit {
       console.log('calc tasmia: ', row);
       this.board[row][col] = this.HUMAN;
 
-      if(this.winningMove(this.board, this.HUMAN)){
+      if (this.winningMove(this.board, this.HUMAN)) {
         console.log("Player won");
         this.whoWon = 'player'
       }
-      
-        this.isFilled[this.rowIndextoSit[col]] = true;
-        this.rowIndextoSit[col] -= 7;
 
-        this.currentTurnNumber++;
-        this.currentTurnPlayer = false;
-        var that = this;
-        setTimeout(function(){
-          that.changeColour(0);
-        }, 50);
-      
+      this.isFilled[this.rowIndextoSit[col]] = true;
+      this.rowIndextoSit[col] -= 7;
+
+      this.currentTurnNumber++;
+      this.currentTurnPlayer = false;
+      var that = this;
+      setTimeout(function () {
+        that.changeColour(0);
+      }, 200);
+
     }
     else {
       this.currentTurnPlayer = true;
@@ -157,53 +175,59 @@ export class UIComponent implements OnInit {
       this.turnCoin = this.turnCoin_url + "redCoin.png";
       var result = this.minimax(this.board, this.difficulty, -Infinity, Infinity, true);
       col = result[0];
-      if( this.isValidLocation(this.board, col)){
+      if (this.isValidLocation(this.board, col)) {
         var row = this.getNextOpenRow(this.board, col);
         console.log('calc ai: ', row);
-        this.board[row][col] = this.AI;
         this.whoseTurn[this.rowIndextoSit[col]] = 'bot';
         this.board[row][col] = this.AI;
-        if(this.winningMove(this.board, this.AI)){
+        if (this.winningMove(this.board, this.AI)) {
           console.log('AI won');
           this.whoWon = 'AI'
         }
         this.isFilled[this.rowIndextoSit[col]] = true;
         this.rowIndextoSit[col] -= 7;
         this.currentTurnNumber++;
+
+        console.log("Whose turn "+ this.whoseTurn[this.rowIndextoSit[col]] + " "+ this.isFilled[this.rowIndextoSit[col]]);
       }
-      
+
     }
-  }
-  else{
-    this.isError = true;
-  }
+    // }
+    // else{
+    //   this.isError = true;
+    // }
   }
 
-  async drop(row:number, col:number){
-    for( var index=col; index<42 ; index+=7){
+  async drop(row: number, col: number) {
+    for (var index = col; index < 42; index += 7) {
       console.log("Droppingg... " + index);
       this.turnCoin = this.turnCoin_url + "yellowCoin.png";
-        // this.isFilled[this.rowIndextoSit[index]] = true;
-        // this.whoseTurn[this.rowIndextoSit[index]] = 'player';
-        await this.delay(3000);
-        this.turnCoin = this.turnCoin_url + "redCoin.png";
-        // this.isFilled[this.rowIndextoSit[index]] = false;
-        console.log("Droppingg Slleepppp..."  + index);
-      }
+      // this.isFilled[this.rowIndextoSit[index]] = true;
+      // this.whoseTurn[this.rowIndextoSit[index]] = 'player';
+      await this.delay(3000);
+      this.turnnn();
+    }
+  }
+
+  turnnn() {
+    this.turnCoin = this.turnCoin_url + "redCoin.png";
+    // this.isFilled[this.rowIndextoSit[index]] = false;
+    console.log("Droppingg Slleepppp..." + this.turnCoin);
   }
 
   delay(ms: number) {
-    return new Promise( resolve => setTimeout(resolve, ms) );
-}
+    return new Promise(resolve => setTimeout(resolve, ms));
+  }
 
   setStarter(input: number) {
     this.whoseTurn_visible = false;
     this.isError = false;
     this.invisible = false;
+    console.log("whoo " + this.whoseTurn_visible + " " + input);
     if (input == 0) {
       this.currentTurnPlayer = true;
     }
-    else {
+    else if(input==1) {
       this.currentTurnPlayer = false;
       this.changeColour(0);
     }
@@ -284,7 +308,7 @@ export class UIComponent implements OnInit {
 
 
     var opponentPiece = this.HUMAN;
-    
+
     if (curPlayer == this.HUMAN) {
       opponentPiece = this.AI;
 
@@ -305,7 +329,7 @@ export class UIComponent implements OnInit {
 
   }
 
-  scoreForCurrentPosition(board: number[][], curPlayer: number):number {
+  scoreForCurrentPosition(board: number[][], curPlayer: number): number {
     var centerArray = [];
     var score = 0;
     for (var r = 0; r < this.ROW_COUNT; r++) {
@@ -412,80 +436,80 @@ export class UIComponent implements OnInit {
   }
 
 
-  minimax(board: number[][], depth:number, alpha:number, beta:number, maximizingPlayer:boolean): number[]{
+  minimax(board: number[][], depth: number, alpha: number, beta: number, maximizingPlayer: boolean): number[] {
     var validLocations = this.validMove(board);
     var is_terminal = this.isTerminal(board);
-    if(depth == 0 || is_terminal){
-      if(is_terminal){
-        if(this.winningMove(board, this.AI)){
+    if (depth == 0 || is_terminal) {
+      if (is_terminal) {
+        if (this.winningMove(board, this.AI)) {
           //-1 means game is over, no valid moves left
-          return [-1,10000000];
+          return [-1, 10000000];
         }
-        else if(this.winningMove(board, this.HUMAN)){
-          return [-1,-10000000];
+        else if (this.winningMove(board, this.HUMAN)) {
+          return [-1, -10000000];
         }
-        else{
-          return [-1,0];
+        else {
+          return [-1, 0];
         }
       }
-      else{
-        return [-1,this.scoreForCurrentPosition(board, this.AI)];
+      else {
+        return [-1, this.scoreForCurrentPosition(board, this.AI)];
       }
     }
-    if(maximizingPlayer){
+    if (maximizingPlayer) {
       var value = -Infinity;
       var column = validLocations[0];
       var row = 0;
       this.tempBoard = [[]];
-      for(var i=0;i< validLocations.length; i++){
+      for (var i = 0; i < validLocations.length; i++) {
         var col = validLocations[i];
         row = this.getNextOpenRow(board, col);
         this.tempBoard = JSON.parse(JSON.stringify(board));
         this.tempBoard[row][col] = this.AI;
-        var new_score = this.minimax(this.tempBoard, depth-1, alpha, beta, false);
-        if(new_score[1] > value){
+        var new_score = this.minimax(this.tempBoard, depth - 1, alpha, beta, false);
+        if (new_score[1] > value) {
           value = new_score[1];
           column = col;
         }
-        if(value>alpha) alpha = value;
-        if(alpha>=beta) break;
+        if (value > alpha) alpha = value;
+        if (alpha >= beta) break;
       }
       return [column, value];
     }
 
-    else{
+    else {
       var value = Infinity;
       var column = validLocations[0];
       var row = 0;
       this.tempBoard = [[]];
-      for(var i=0;i< validLocations.length; i++){
+      for (var i = 0; i < validLocations.length; i++) {
         var col = validLocations[i];
         row = this.getNextOpenRow(board, col);
         this.tempBoard = JSON.parse(JSON.stringify(board));
         this.tempBoard[row][col] = this.HUMAN;
-        var new_score = this.minimax(this.tempBoard, depth-1, alpha, beta, true);
-        if(new_score[1] < value){
+        var new_score = this.minimax(this.tempBoard, depth - 1, alpha, beta, true);
+        if (new_score[1] < value) {
           value = new_score[1];
           column = col;
         }
-        if(value<beta) beta = value;
-        if(alpha>=beta) break;
+        if (value < beta) beta = value;
+        if (alpha >= beta) break;
       }
       return [column, value];
     }
   }
 
-  bestMove(board:number[][], curPlayer:number){
+  bestMove(board: number[][], curPlayer: number) {
     var validLocations = this.validMove(board);
     var best_score = -Infinity;
     var best_col = validLocations[0];
-    for(var i=0;i< validLocations.length; i++){
+    for (var i = 0; i < validLocations.length; i++) {
       var col = validLocations[i];
       var row = this.getNextOpenRow(board, col);
       this.tempBoard = JSON.parse(JSON.stringify(board));
       this.tempBoard[row][col] = curPlayer;
       var score = this.scoreForCurrentPosition(this.tempBoard, curPlayer);
-      if(score >= best_score){
+      if (score >= best_score) {
         best_score = score;
         best_col = col;
       }
