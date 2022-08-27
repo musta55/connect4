@@ -26,6 +26,13 @@ h3{
   color: #ffffff;
 }
 
+h4{
+  font-family: 'Poppins';
+  text-align: center;
+  font-size: 15px;
+  font-weight: bold;
+}
+
 .whoStarts-invisible{
   visibility: hidden;
 }
@@ -246,10 +253,84 @@ svg{
 }
 
 .finishMessage{
-  height: 40px;
-  width: 200px;
+  height: 50px;
+  width: 100%;
   color: white;
   background-color: #004089;
-  margin: 20px auto 0px;
-  padding-top: 1px;
+  margin: 0px auto 20px;
+  padding-top: 3px;
+}
+
+.finish{
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.finishBoardAI{
+  height: 450px;
+  width: 356px;
+  align-self: center;
+  top: 150px;
+  right: 60px;
+  background-image: url('../../assets/images/AIWin.png');
+  background-repeat: none;
+  background-size: contain;
+  z-index: 1;
+}
+
+.finishBoardPlayer{
+  height: 400px;
+  width: 352px;
+  align-self: center;
+  top: 200px;
+  left: 50px;
+  background-image: url('../../assets/images/playerWin.png');
+  background-repeat: none;
+  background-size: contain;
+  z-index: 1;
+}
+
+.startNew{
+  align-self: center;
+  top: 5px;
+}
+
+.button-start {
+  height: 40px;
+  width: 200px;
+  padding: auto;
+  background-color: #FFFFFF;
+  border: 0;
+  border-radius: .5rem;
+  box-sizing: border-box;
+  color: #083aa6;
+  font-family: "Inter var",ui-sans-serif,system-ui,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue",Arial,"Noto Sans",sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol","Noto Color Emoji";
+  font-size: .875rem;
+  font-weight: 600;
+  line-height: 1.25rem;
+  padding: .75rem 1rem;
+  text-align: center;
+  text-decoration: none #D1D5DB solid;
+  text-decoration-thickness: auto;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  cursor: pointer;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.button-start:hover {
+  background-color: rgb(249,250,251);
+}
+
+.button-start:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+}
+
+.button-start:focus-visible {
+  box-shadow: none;
 }

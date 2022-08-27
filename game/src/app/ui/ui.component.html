@@ -4,8 +4,18 @@
     <h3> {{winningLine}} </h3>
   </div>
 
+
+  <div class="finish" [ngStyle]="{'visibility': gameEnd? 'visible' : 'hidden'}">
+    <div class="startNew" style="position:absolute;">
+      <button class="button-start" (click)="reset()"><h4>Start a New Game</h4></button>
+    </div>
+    <div class="finishBoardAI" [ngStyle]="{'visibility': whoWon=== 'AI'? 'visible' : 'hidden'}" style="position:absolute;"></div>
+    <div class="finishBoardPlayer" [ngStyle]="{'visibility': whoWon=== 'Player'? 'visible' : 'hidden'}" style="position:absolute;"></div>
+  </div>
+  
+
   <div class="contain">
-    <div class="turn">
+    <div class="turn" [ngStyle]="{'visibility': gameEnd? 'hidden' : 'visible'}">
       <!-- [ngStyle]="{'visibility': whoseTurn_visible === true? 'hidden' : 'visible'}" -->
           <h2>{{turn}} turn</h2>
           <img class="turnButton" [src]="turnCoin">
@@ -26,7 +36,7 @@
       </div>
     </div>
     </div>
-    <div class="others" (click)="reset()">
+    <div class="others" (click)="reset()" [ngStyle]="{'visibility': gameEnd? 'hidden' : 'visible'}">
     </div>
   </div>
 </div>

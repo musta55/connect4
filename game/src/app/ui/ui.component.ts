@@ -138,7 +138,7 @@ export class UIComponent implements OnInit {
   }
 
   positionLeft(): Object {
-    if (this.arrowVisible) {
+    if (this.arrowVisible && !this.gameEnd) {
       return { 'left.px': this.getCurrentTileX, visibility: 'visible' }
     }
     else {
