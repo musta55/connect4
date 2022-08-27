@@ -43,6 +43,7 @@ export class UIComponent implements OnInit {
   currentTurnPlayer: boolean = true;
 
   whoseTurn: string[] = new Array(42);
+  winning: boolean[] = new Array(42);
 
   makeRed: boolean[] = new Array(42);
   makeYellow: boolean[] = new Array(42);
@@ -62,20 +63,26 @@ export class UIComponent implements OnInit {
     [0, 0, 0, 0, 0, 0, 0]
   ]
 
-  testBoard = [
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 1, 1, 1, 0, 0],
-    [0, 2, 2, 0, 1, 1, 0],
-    [0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 0, 0, 0],
-    [0, 0, 1, 0, 0, 0, 0]
-  ]
+  // testBoard = [
+  //   [0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 1, 1, 1, 0, 0],
+  //   [0, 2, 2, 0, 1, 1, 0],
+  //   [0, 0, 0, 0, 0, 0, 0],
+  //   [0, 0, 0, 1, 0, 0, 0],
+  //   [0, 0, 1, 0, 0, 0, 0]
+  // ]
 
   tempBoard: number[][] = [[]];
   invisible: boolean = true;
   whoWon: string = '';
+  gameEnd: boolean = false;
+  winningLine: string = '';
 
-  who =0;
+  who = 0;
+
+  winningR: number[] = new Array(4);
+  winningC: number[] = new Array(4);
+
 
   ngOnInit(): void {
 
@@ -88,6 +95,7 @@ export class UIComponent implements OnInit {
       this.whoseTurn[this.i] = 'player';
       this.makeRed[this.i] = false;
       this.makeYellow[this.i] = false;
+      this.winning[this.i] = false;
     }
 
     this.rowIndextoSit[0] = 35;
@@ -155,7 +163,9 @@ export class UIComponent implements OnInit {
 
       if (this.winningMove(this.board, this.HUMAN)) {
         console.log("Player won");
-        this.whoWon = 'player'
+        this.whoWon = 'Player';
+        this.winningLine = 'Player Wins';
+        this.gameEnd = true;
       }
 
       this.isFilled[this.rowIndextoSit[col]] = true;
@@ -181,8 +191,15 @@ export class UIComponent implements OnInit {
         this.whoseTurn[this.rowIndextoSit[col]] = 'bot';
         this.board[row][col] = this.AI;
         if (this.winningMove(this.board, this.AI)) {
+          for(var i=0; i<4; i++){
+            console.log(this.winningR[i] + " " + this.winningC[i]);
+            console.log(35 - this.winningR[i] * 7 + this.winningC[i]);
+            this.winning[35 - this.winningR[i] * 7 + this.winningC[i]] = true;
+          }
           console.log('AI won');
-          this.whoWon = 'AI'
+          this.whoWon = 'AI';
+          this.winningLine = 'AI Wins';
+          this.gameEnd = true;
         }
         this.isFilled[this.rowIndextoSit[col]] = true;
         this.rowIndextoSit[col] -= 7;
@@ -240,8 +257,17 @@ export class UIComponent implements OnInit {
     for (var c = 0; c < this.COL_COUNT - 3; c++) {
       for (var r = 0; r < this.ROW_COUNT; r++) {
         //horizontal check
-        if (board[r][c] == piece && board[r][c + 1] == piece && board[r][c + 2] == piece && board[r][c + 3] == piece) {
+        if(piece!=0){
+          if (board[r][c] == piece && board[r][c + 1] == piece && board[r][c + 2] == piece && board[r][c + 3] == piece) {
+          // col_count * r + c
+        
+          for(var i=0; i<4; i++){
+            this.winningC[i] = c + i;
+            this.winningR[i] =  r;
+          }
+
           return true;
+        }
         }
       }
     }
@@ -250,6 +276,10 @@ export class UIComponent implements OnInit {
     for (var r = 0; r < this.ROW_COUNT - 3; r++) {
       for (var c = 0; c < this.COL_COUNT; c++) {
         if (board[r][c] == piece && board[r + 1][c] == piece && board[r + 2][c] == piece && board[r + 3][c] == piece) {
+          for(var i=0; i<4; i++){
+            this.winningC[i] = c;
+            this.winningR[i] =  r + i;
+          }
           return true;
         }
       }
@@ -260,6 +290,10 @@ export class UIComponent implements OnInit {
     for (var r = 0; r < this.ROW_COUNT - 3; r++) {
       for (var c = 0; c < this.COL_COUNT - 3; c++) {
         if (board[r][c] == piece && board[r + 1][c + 1] == piece && board[r + 2][c + 2] == piece && board[r + 3][c + 3] == piece) {
+          for(var i=0; i<4; i++){
+            this.winningC[i] = c + i;
+            this.winningR[i] =  r + i;
+          }
           return true;
         }
       }
@@ -269,6 +303,10 @@ export class UIComponent implements OnInit {
     for (var c = 0; c < this.COL_COUNT - 3; c++) {
       for (var r = 3; r < this.ROW_COUNT; r++) {
         if (board[r][c] == piece && board[r - 1][c + 1] == piece && board[r - 2][c + 2] == piece && board[r - 3][c + 3] == piece) {
+          for(var i=0; i<4; i++){
+            this.winningC[i] = c + i;
+            this.winningR[i] =  r - i;
+          }
           return true;
         }
       }

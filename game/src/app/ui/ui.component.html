@@ -1,10 +1,7 @@
 <div class="body">
 
-  <div class="finishMessage" [ngStyle]="{'visibility': whoWon === 'player'? 'visible' : 'hidden'}">
-    Player Won!
-  </div>
-  <div class="finishMessage" [ngStyle]="{'visibility': whoWon === 'AI'? 'visible' : 'hidden'}">
-    AI Won!
+  <div class="finishMessage" [ngStyle]="{'visibility': gameEnd? 'visible' : 'hidden'}">
+    <h3> {{winningLine}} </h3>
   </div>
 
   <div class="contain">
@@ -20,13 +17,11 @@
     <div class="boardBG">
       <div class="board">
         <div class="tile" *ngFor="let in of counter(42); let i = index">
-          <div class="inner-circle coin" *ngIf="!isFilled[i]" (click)="changeColour(i)"
-            (mouseover)="changeArrow(i)">
-          </div>
-          <div class="inner-circle-filled-player coin" *ngIf="isFilled[i] && whoseTurn[i] === 'player'"
-            (click)="changeColour(i)"></div>
-          <div class="inner-circle-filled-bot coin" *ngIf="isFilled[i] && whoseTurn[i] === 'bot'"
-            (click)="changeColour(i)"></div>
+          <div class="inner-circle coin" *ngIf="!isFilled[i]" (click)="changeColour(i)"(mouseover)="changeArrow(i)"></div>
+          <div class="inner-circle-filled-player coin" *ngIf="isFilled[i] && whoseTurn[i] === 'player' && !winning[i]" (click)="changeColour(i)"></div>
+          <div class="inner-circle-filled-bot coin" *ngIf="isFilled[i] && whoseTurn[i] === 'bot' && !winning[i]" (click)="changeColour(i)"></div>
+          <div class="inner-circle-filled-winRed coin" *ngIf="winning[i] && whoseTurn[i] === 'player'"></div>
+          <div class="inner-circle-filled-winYellow coin" *ngIf="winning[i] && whoseTurn[i] === 'bot'"></div>
         </div>
       </div>
     </div>
