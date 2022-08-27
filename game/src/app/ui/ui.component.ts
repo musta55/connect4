@@ -130,9 +130,11 @@ export class UIComponent implements OnInit {
   }
 
   changeArrow(index: number) {
-    this.arrowVisible = true;
-    console.log("Hovering on tile no " + index);
-    this.getCurrentTileX = this.getTiles[index].getBoundingClientRect().left;   // Get tile left position
+    if(!this.gameEnd){
+      this.arrowVisible = true;
+      console.log("Hovering on tile no " + index);
+      this.getCurrentTileX = this.getTiles[index].getBoundingClientRect().left;   // Get tile left position
+    }
   }
 
   positionLeft(): Object {
@@ -162,6 +164,11 @@ export class UIComponent implements OnInit {
       this.board[row][col] = this.HUMAN;
 
       if (this.winningMove(this.board, this.HUMAN)) {
+        for(var i=0; i<4; i++){
+          console.log(this.winningR[i] + " " + this.winningC[i]);
+          console.log(35 - this.winningR[i] * 7 + this.winningC[i]);
+          this.winning[35 - this.winningR[i] * 7 + this.winningC[i]] = true;
+        }
         console.log("Player won");
         this.whoWon = 'Player';
         this.winningLine = 'Player Wins';
