@@ -145,7 +145,7 @@ export class UIComponent implements OnInit {
   }
 
   changeColour(i: number) {
-    // if(!this.whoseTurn_visible){
+     if(!this.gameEnd){
     var col = i % 7;
     //var row = Math.floor(i / 7);
     var row = this.getNextOpenRow(this.board, col);
@@ -209,10 +209,7 @@ export class UIComponent implements OnInit {
       }
 
     }
-    // }
-    // else{
-    //   this.isError = true;
-    // }
+    }
   }
 
   async drop(row: number, col: number) {
