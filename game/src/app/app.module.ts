@@ -7,13 +7,15 @@ import { AppComponent } from './app.component';
 import { UIComponent } from './ui/ui.component';
 import { StartComponent } from './start/start.component';
 import { PlayerSettingsComponent } from './player-settings/player-settings.component';
+import { FooterComponent } from './footer/footer.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     UIComponent,
     StartComponent,
-    PlayerSettingsComponent
+    PlayerSettingsComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

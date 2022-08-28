@@ -243,25 +243,25 @@ export class UIComponent implements OnInit {
   //   }
   // }
 
-  drop(row: number, col: number, isFilled: boolean[], whoseTurn: string[],rowIndextoSit:number[] ) {
-    let i = col;
-    let max = 42;
-    (function repeat() {
-      console.log("Going to sleep");
-      if(i-7>=0){
-        isFilled[rowIndextoSit[i-7
-        ]] = false;
-      }
-      if (i > 42) return;
-      setTimeout(() => {
-        console.log("sleep " + i);
-        isFilled[rowIndextoSit[i]] = true;
-        whoseTurn[rowIndextoSit[i]] = 'player';
-        i+=7;
-        repeat();
-      }, 2000);
-    })();
-  }
+  // drop(row: number, col: number, isFilled: boolean[], whoseTurn: string[],rowIndextoSit:number[] ) {
+  //   let i = col;
+  //   let max = 42;
+  //   (function repeat() {
+  //     console.log("Going to sleep");
+  //     if(i-7>=0){
+  //       isFilled[rowIndextoSit[i-7
+  //       ]] = false;
+  //     }
+  //     if (i > 42) return;
+  //     setTimeout(() => {
+  //       console.log("sleep " + i);
+  //       isFilled[rowIndextoSit[i]] = true;
+  //       whoseTurn[rowIndextoSit[i]] = 'player';
+  //       i+=7;
+  //       repeat();
+  //     }, 2000);
+  //   })();
+  // }
 
 
 
@@ -387,10 +387,10 @@ export class UIComponent implements OnInit {
     var opponentCount = this.countPiece(window, opponentPiece);
 
 
-    if (curPlayerCount == 4) score += 100;
-    else if (curPlayerCount == 3 && emptyCount == 1) score += 5;
-    else if (curPlayerCount == 2 && emptyCount == 2) score += 2;
-    else if (opponentCount == 3 && emptyCount == 1) score -= 5;
+    if (curPlayerCount == 4) score += 1000;
+    else if (curPlayerCount == 3 && emptyCount == 1) score += 50;
+    else if (curPlayerCount == 2 && emptyCount == 2) score += 20;
+    else if (opponentCount == 3 && emptyCount == 1) score -= 50;
 
     return score;
 
@@ -566,22 +566,22 @@ export class UIComponent implements OnInit {
     }
   }
 
-  bestMove(board: number[][], curPlayer: number) {
-    var validLocations = this.validMove(board);
-    var best_score = -Infinity;
-    var best_col = validLocations[0];
-    for (var i = 0; i < validLocations.length; i++) {
-      var col = validLocations[i];
-      var row = this.getNextOpenRow(board, col);
-      this.tempBoard = JSON.parse(JSON.stringify(board));
-      this.tempBoard[row][col] = curPlayer;
-      var score = this.scoreForCurrentPosition(this.tempBoard, curPlayer);
-      if (score >= best_score) {
-        best_score = score;
-        best_col = col;
-      }
-    }
-    return best_col;
-  }
+  // bestMove(board: number[][], curPlayer: number) {
+  //   var validLocations = this.validMove(board);
+  //   var best_score = -Infinity;
+  //   var best_col = validLocations[0];
+  //   for (var i = 0; i < validLocations.length; i++) {
+  //     var col = validLocations[i];
+  //     var row = this.getNextOpenRow(board, col);
+  //     this.tempBoard = JSON.parse(JSON.stringify(board));
+  //     this.tempBoard[row][col] = curPlayer;
+  //     var score = this.scoreForCurrentPosition(this.tempBoard, curPlayer);
+  //     if (score >= best_score) {
+  //       best_score = score;
+  //       best_col = col;
+  //     }
+  //   }
+  //   return best_col;
+  // }
 
 }
